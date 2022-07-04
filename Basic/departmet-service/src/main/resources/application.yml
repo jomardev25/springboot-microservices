@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: department-service
+  datasource:
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://127.0.0.1:5432/microservices?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+  zipkin:
+    base-url: http://127.0.0.1:9411
+
+server:
+  port: 8084
+  

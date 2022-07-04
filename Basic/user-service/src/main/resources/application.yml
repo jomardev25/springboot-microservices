@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://127.0.0.1:5432/microservices?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+  zipkin:
+    base-url: http://127.0.0.1:9411
+
+server:
+  port: 8085
+      
+resilience4j:
+  retry:
+    retry-aspect-order: 2
+    instances:
+      departmentServiceRetry:
+        max-attempts: 3
+        wait-duration: 5s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.RestClientException
+        ignore-exceptions:
+          - com.jbignacio.userservice.exception.IgnoreException
+  circuitbreaker:
+    circuit-breaker-aspect-order: 1
+    instances:
+      departmentServiceCircuitBreaker:
+        wait-duration-in-open-state: 1m
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-type: count-based
+        sliding-window-size: 5
+        minimum-number-of-calls: 5
+        slow-call-duration-threshold: 10s
+        slow-call-rate-threshold: 60
+        failure-rate-threshold: 60
+        
+        
+    
+      

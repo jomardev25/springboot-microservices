@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: api-gateway
+    
+  ##GATEWAY CONFIGURATIONS
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      routes:
+      ## DEPARTMENT SERVICE
+      - id: department-service
+        uri: lb://department-service
+        predicates:
+        - Path=/v1/departments/**
+        #filters:
+        #- StripPrefix=1
+      ## USER SERVICE
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/v1/users/**
+        #filters:
+        #- StripPrefix=1
+         
+server:
+  port: 8082
+ 
