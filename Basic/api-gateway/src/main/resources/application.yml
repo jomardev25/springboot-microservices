@@ -13,16 +13,24 @@ spring:
         uri: lb://department-service
         predicates:
         - Path=/v1/departments/**
-        #filters:
-        #- StripPrefix=1
+       
       ## USER SERVICE
       - id: user-service
         uri: lb://user-service
         predicates:
         - Path=/v1/users/**
-        #filters:
-        #- StripPrefix=1
-         
+        
+      ## SERVICE-REGISTRY
+      - id: service-registry  
+        uri: http://localhost:8761/
+        predicates:        - Path=/eureka/web**
+        filters:        - SetPath=/
+      
+      ## Discover Server Static Resources Route
+      - id: service-registry-static-assets
+        uri: http://localhost:8761/
+        predicates:        - Path=/eureka/**
+       
 server:
   port: 8082
  

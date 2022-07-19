@@ -1,0 +1,36 @@
+server:
+  port: 9082
+
+spring:
+  application:
+    name: inventory-service
+  r2dbc:
+    url: r2dbc:postgresql://127.0.0.1:5432/saga_choreography
+    username: postgres
+    password: 1234
+  cloud:    stream:
+      kafka: 
+        binder:
+          brokers: localhost:9092
+      function:
+        definition: inventoryProcessor
+      bindings:
+          inventoryProcessor-in-0:
+            destination: order-events
+          inventoryProcessor-out-0:
+            destination: inventory-events
+            
+logging:
+  level:
+    io:
+      reflectoring: DEBUG
+      r2dbc.postgresql.QUERY: DEBUG # for queries
+      r2dbc.postgresql.PARAM: DEBUG # for parameters
+    org:
+      springframework:
+        web: INFO
+      apache.kafka.*: WARN
+    reactor:
+      netty:
+        http:
+          client: DEBUG

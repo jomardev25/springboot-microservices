@@ -6,7 +6,7 @@ spring:
     password: 1234
     url: jdbc:postgresql://127.0.0.1:5432/microservices?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
   zipkin:
-    base-url: http://127.0.0.1:9411
+    base-url: ip172-18-0-73-cbb79eqv7vjg00b2paog@direct.labs.play-with-docker.com:9411
 
 server:
   port: 8084
